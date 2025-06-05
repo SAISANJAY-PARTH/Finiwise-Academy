@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "finwiseacademy",
+  "private_key_id": "4ed1ffef24b789a44de9be93289ae3c8eb47e686",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCiYZ2dIdR5/pKS\neKEO74B1PbWTYtjJO3WK/xSAiY5jSznnoNraQ/v7jD5w7JGR12kiwNIFVcg+QXGV\nsYnJVbW7P5mwtCFGXuAIz8z4m1ORUmCbHwLU+J0pgfr+oYFIcnwBZejAq1SGIptm\nMa3hUd/xsBqNpZkCe7i0lenizM6WydYsyeDD1HysMHkiVNr81vHTfYQOlv24MXbb\nhAmCohiBE9cjSrrNLTz54I9XIZSKYKKR3QiRp4Baeo0SKSc5XWtzhG7CnDI7dTBR\ncpGAbT2IlGN3LyCMhw10Smy/jfrGO0PkiQwp1860U0Ekoh06FrUYjDUvzCZtW02s\n50NOa8kLAgMBAAECggEAB7gjQYKHssr21c61PVwGW8x0ss56pspUUqjApUGkyrSb\nSpcbgE/GDVXD7CNa4jd+0H+hHE7RJ6B90VNwzOjtrDqgSEWv5UQCW3jhchoUNW7Y\nl9c4D77H3d7He05bMoH6wihBkdMzP/MqNwf6j6EQR9GK2Zv7M6KFC9SqmzUIRyO6\nuylHJCie1SlqJeEwsl8YTVP7Lg/DbFHkt5VKnOhU0O+yK+WO1CjaFb0qx9CA3ynx\nr+aYWYs0lNZNxflAdckQAO9trHy/BKiOCALcPpmLErbJrbVx+ruEI+oNWI8RHrN7\njOVRpYP35FA4L6hy75gqZtg0pZzh696QE+Qj89fviQKBgQDfTOeF6O0VLJnDBQKo\n0jW1xobIkngVK2bDmyyhVw46C+tk8XiZsJ/3INHrMnxlHLId5Z3YxGpeDVfPGgdh\nvk+kUMD5xWjq279v1A68vyDBDXT7wec8ZPDFw5bcyW3JtnZJ1QG85L9+5G+Kc3UN\n/BGcPScIC/ek3kNXSWIVCvisYwKBgQC6KPk23rQMg2OoksvNDTBms/3hZxcFd4Zf\neyyfFZoN7gddJsqNGxlaLWzD3LktpeanCFYCZDilPEJeTQLhieI0QelUC8A9mn8X\n6b1gCUGAnACEodZmNv6F237+TmyizbzSQmcDcNdIMC7wrEabTBAGp9MpSvtJlKQw\nhxTzGkAtOQKBgAEcWtJ5tCQ00pb7wWWhlg7PbAA3ak2Ap8Q1U2WCD1oOkR8xbE4n\naMRL739iAuhl2iT37W8UmwrYuiUXlg3QaokAtdUIPFteuHcP8PrTYJBVRs2xyzqr\nrd7t+CQlBFzKgZAgdR/Ba4pwDHX92Qk2xcenLjiGBrdVO7SFcu1z3oTNAoGAZnmf\nliDJpAm/llAYd+vGtQJnwuhot82v3meDjJ7rird4vkJYRYyhTA6tTLP4C7TDXzcr\ngW2B8RNWxWpHJ7grGPEfa/B8Bm1BgPxeDruJny5A6sHbr7CeMzk8kujAzG3Mf0Gm\nSzKWj1pWvI1Y4KviNoezqYtpAHweVchGM/xDT6ECgYBg4b1m6bbaQV9ipu9pS7fY\njnN1FDTN3umi2kx/adlK/U6lcNp/Seqfqf0ZDEwm4psW9PgGYCK1cWqvXyGdsIec\n6cQeFh6yJucEpJSPifvBb3+F0IGnZSyatDKEjD1y7I/6QiV+pmQAxkD0DJVgPgmi\npbrWh2vo2FTYK88+E2lQZQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "finwiseacademy@finwiseacademy.iam.gserviceaccount.com",
+  "client_id": "117536471094385618778",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/finwiseacademy%40finwiseacademy.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 10px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input[type="email"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 4px;
+      border: 1.5px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin: 10px 0;
+    }
+
+    .forgot-password a {
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal styles */
+    #forgotPasswordModal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    #forgotPasswordModal .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px 30px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+      text-align: center;
+    }
+
+    #forgotPasswordModal h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    #forgotPasswordModal input[type="email"] {
+      margin-bottom: 15px;
+    }
+
+    #forgotPasswordModal button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #forgotPasswordModal button:hover {
+      background-color: #218838;
+    }
+
+    #forgotPasswordModal .close-btn {
+      position: absolute;
+      top: 8px; right: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    #forgotPasswordModal .close-btn:hover {
+      color: #000;
+    }
+
+    #forgotPasswordMessage {
+      margin-top: 15px;
+      font-weight: 600;
+      color: #28a745;
+    }
+
+    #forgotPasswordError {
+      margin-top: 15px;
+      font-weight: 600;
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <form action="login.php" method="POST">
+      <label>Email:
+        <input type="email" name="email" required>
+      </label>
+      <label>Code:
+        <input type="text" name="code" required>
+      </label>
+
+      <div class="forgot-password">
+        <a onclick="document.getElementById('forgotPasswordModal').style.display='block'">Forgot your password?</a>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgotPasswordModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeForgotPassword()">&times;</span>
+      <h3>Forgot your password?</h3>
+      <input type="email" id="forgotEmail" placeholder="Enter your registered email" required>
+      <button onclick="fetchCode()">Get Code</button>
+      <div id="forgotPasswordMessage"></div>
+      <div id="forgotPasswordError"></div>
+    </div>
+  </div>
+
+  <script>
+    function closeForgotPassword() {
+      document.getElementById('forgotPasswordModal').style.display = 'none';
+      document.getElementById('forgotPasswordMessage').textContent = '';
+      document.getElementById('forgotPasswordError').textContent = '';
+      document.getElementById('forgotEmail').value = '';
+    }
+
+    // Close modal if user clicks outside content
+    window.onclick = function(event) {
+      const modal = document.getElementById('forgotPasswordModal');
+      if (event.target == modal) {
+        closeForgotPassword();
+      }
+    }
+
+    function fetchCode() {
+      const email = document.getElementById('forgotEmail').value.trim();
+      const messageDiv = document.getElementById('forgotPasswordMessage');
+      const errorDiv = document.getElementById('forgotPasswordError');
+
+      messageDiv.textContent = '';
+      errorDiv.textContent = '';
+
+      if (!email) {
+        errorDiv.textContent = 'Please enter your email.';
+        return;
+      }
+
+      // AJAX request to server-side PHP to get the code for email
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "forgot_password.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            const response = xhr.responseText.trim();
+            if (response.startsWith("Code:")) {
+              messageDiv.style.color = '#28a745';
+              messageDiv.textContent = response;
+            } else {
+              errorDiv.style.color = '#dc3545';
+              errorDiv.textContent = response;
+            }
+          } else {
+            errorDiv.style.color = '#dc3545';
+            errorDiv.textContent = "Error contacting server.";
+          }
+        }
+      };
+      xhr.send("email=" + encodeURIComponent(email));
+    }
+  </script>
+
+</body>
+</html>

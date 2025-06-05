@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinWise Academy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Existing CSS styles unchanged */
+        body {
+            font-family: 'Inter', 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            font-weight: 400;
+            overflow-x: hidden;
+        }
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 1s ease-out, visibility 1s ease-out;
+        }
+        #splash-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #splash-screen img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+            animation: slideDown 1s ease-in-out forwards;
+        }
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in, visibility 1s ease-in;
+            transition-delay: 0.5s;
+        }
+        #main-content.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .container {
+            max-width: 960px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+        .lead {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #555;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        ul li {
+            background-color: #e9ecef;
+            margin-bottom: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out;
+            font-size: 1.05rem;
+        }
+        ul li:hover {
+            transform: translateX(5px);
+        }
+        form {
+            background-color: #f1f3f5;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        form label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        form button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8pt;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        form button:hover {
+            background-color: #218838;
+        }
+        .form-message {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .form-message.success {
+            background-color: #e2f0ff;
+            border: 1px solid #b3d7ff;
+            color: #0056b3;
+        }
+        .form-message.error {
+            background-color: #ffe6e6;
+            border: 1px solid #ff9999;
+            color: #cc0000;
+        }
+        .social-icons {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .social-icons a {
+            font-size: 1.7rem;
+            color: #007bff;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+        .social-icons a.instagram:hover {
+            color: #E1306C;
+        }
+        .social-icons a.linkedin:hover {
+            color: #0077B5;
+        }
+        .social-icons i {
+            vertical-align: middle;
+        }
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .calculator-row {
+            --bs-gutter-y: 0;
+        }
+        .calculator-card {
+            background-color: #f1f3f5;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            min-height: 300px;
+        }
+        .calculator-card h4 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .calculator-card .form-control {
+            margin-bottom: 15px;
+        }
+        .calculator-card .btn {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .calculator-card .btn:hover {
+            background-color: #0056b3;
+        }
+        .calculator-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e2f0ff;
+            border-radius: 8px;
+            border: 1px solid #b3d7ff;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .calculator-result.error {
+            background-color: #ffe6e6;
+            border-color: #ff9999;
+            color: #cc0000;
+        }
+        .quotes-section {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            background-color: #e9f7ef;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .quote-item {
+            font-style: italic;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            border-left: 4px solid #28a745;
+            font-size: 1.1rem;
+        }
+        .quote-author {
+            text-align: right;
+            font-weight: 500;
+            margin-top: 5px;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .image-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #0056b3 !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #007bff !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #0056b3 !important;
+        }
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 0.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .nav-item .nav-link.active {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease, transform 0.1s ease-out;
+        }
+        .nav-item .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease-in-out;
+            z-index: 1;
+        }
+        .nav-item .nav-link.active:hover::before {
+            left: 0;
+        }
+        .nav-item .nav-link.active:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div id="splash-screen">
+        <img src="logo.jpg" alt="FinWise Academy Logo">
+    </div>
+
+    <div id="main-content">
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="portfolio.html">FinWise Academy</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="about-founder.html">About Founder</a>
+                        </li>
+                        <li>
+                            <a class="nav-link active" href="expertise.html">My Expertise</a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link active" href="login.html">Login</a>
+                        </li>
+                        <li>
+                            <a class="nav-link active" href="signup.html">Sign Up</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5 pt-5">
+            <h1 class="text-center mb-4">Welcome to FinWise Academy</h1>
+            <p class="lead text-center">Your one-stop solution for financial education and resources.</p>
+
+            <div class="image-section"></div>
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <p>At FinWise Academy, I leverage expertise in budgeting, debt management, and saving strategies to create personalized financial plans. Our goal-oriented approach and emergency fund planning have equipped numerous individuals with the tools to build a robust financial safety net. As an educator at FinWise Academy, financial education and content creation are core aspects of my work. I focus on simplifying complex finance and investment concepts through cutting-edge technologies like AI and FinTech.</p>
+                    <p>My mission is to empower individuals with the knowledge and skills they need to make informed financial decisions. I believe that everyone deserves access to quality financial education, and I am committed to providing resources that are both informative and engaging.</p>
+                    <p>Join us at FinWise Academy and take the first step towards financial literacy and empowerment!</p>
+                </div>
+            </div>
+
+            
+
+            <div class="quotes-section">
+                <h3 class="text-center">That One Quote Which Inspires Me</h3>
+                <div class="quote-item">
+                    "Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it."
+                    <div class="quote-author">- Albert Einstein</div>
+                </div>
+            </div>
+
+            <h2 class="mt-5">Financial Tools & Calculators</h2>
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>SIP Calculator</h4>
+                        <div class="mb-3">
+                            <label for="sipMonthlyInvestment" class="form-label">Monthly Investment (₹):</label>
+                            <input type="number" class="form-control" id="sipMonthlyInvestment" value="5000" min="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sipAnnualRate" class="form-label">Annual Interest Rate (%):</label>
+                            <input type="number" class="form-control" id="sipAnnualRate" value="12" min="0.1" max="50" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sipYears" class="form-label">Investment Period (Years):</label>
+                            <input type="number" class="form-control" id="sipYears" value="10" min="1" max="60" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateSIP()">Calculate SIP</button>
+                        <div class="calculator-result" id="sipResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>SWP Calculator</h4>
+                        <div class="mb-3">
+                            <label for="swpTotalInvestment" class="form-label">Total Investment (₹):</label>
+                            <input type="number" class="form-control" id="swpTotalInvestment" value="1000000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="swpMonthlyWithdrawal" class="form-label">Monthly Withdrawal (₹):</label>
+                            <input type="number" class="form-control" id="swpMonthlyWithdrawal" value="10000" min="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="swpExpectedRate" class="form-label">Expected Annual Return (%):</label>
+                            <input type="number" class="form-control" id="swpExpectedRate" value="8" min="0.1" max="50" step="0.1" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateSWP()">Calculate SWP</button>
+                        <div class="calculator-result" id="swpResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Loan Interest Calculator</h4>
+                        <div class="mb-3">
+                            <label for="loanAmount" class="form-label">Loan Amount (₹):</label>
+                            <input type="number" class="form-control" id="loanAmount" value="500000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loanAnnualRate" class="form-label">Annual Interest Rate (%):</label>
+                            <input type="number" class="form-control" id="loanAnnualRate" value="10" min="0.1" max="50" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loanTenureMonths" class="form-label">Loan Tenure (Months):</label>
+                            <input type="number" class="form-control" id="loanTenureMonths" value="120" min="1" max="600" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateLoan()">Calculate Loan</button>
+                        <div class="calculator-result" id="loanResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>FIRE Calculator</h4>
+                        <div class="mb-3">
+                            <label for="fireCurrentSavings" class="form-label">Current Savings (₹):</label>
+                            <input type="number" class="form-control" id="fireCurrentSavings" value="100000" min="0" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fireAnnualExpenses" class="form-label">Annual Expenses (₹):</label>
+                            <input type="number" class="form-control" id="fireAnnualExpenses" value="600000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fireAnnualReturn" class="form-label">Expected Annual Return (Post-Retirement, %):</label>
+                            <input type="number" class="form-control" id="fireAnnualReturn" value="7" min="0.1" max="30" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fireAnnualSavings" class="form-label">Current Annual Savings (₹):</label>
+                            <input type="number" class="form-control" id="fireAnnualSavings" value="120000" min="0" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateFIRE()">Calculate FIRE</button>
+                        <div class="calculator-result" id="fireResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Lumpsum Calculator</h4>
+                        <div class="mb-3">
+                            <label for="lumpsumPrincipal" class="form-label">Principal Amount (₹):</label>
+                            <input type="number" class="form-control" id="lumpsumPrincipal" value="100000" min="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lumpsumAnnualRate" class="form-label">Annual Interest Rate (%):</label>
+                            <input type="number" class="form-control" id="lumpsumAnnualRate" value="10" min="0.1" max="50" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lumpsumYears" class="form-label">Investment Period (Years):</label>
+                            <input type="number" class="form-control" id="lumpsumYears" value="5" min="1" max="60" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateLumpsum()">Calculate Lumpsum</button>
+                        <div class="calculator-result" id="lumpsumResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>PPF Calculator <small>(Simplified)</small></h4>
+                        <div class="mb-3">
+                            <label for="ppfAnnualInvestment" class="form-label">Annual Investment (₹):</label>
+                            <input type="number" class="form-control" id="ppfAnnualInvestment" value="150000" min="500" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ppfYears" class="form-label">Investment Period (Years - min 15):</label>
+                            <input type="number" class="form-control" id="ppfYears" value="15" min="15" max="50" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ppfRate" class="form-label">Current PPF Interest Rate (%):</label>
+                            <input type="number" class="form-control" id="ppfRate" value="7.1" min="0.1" max="15" step="0.1" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculatePPF()">Calculate PPF</button>
+                        <div class="calculator-result" id="ppfResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>EPF Calculator <small>(Simplified)</small></h4>
+                        <div class="mb-3">
+                            <label for="epfMonthlyBasicDA" class="form-label">Monthly Basic + DA (₹):</label>
+                            <input type="number" class="form-control" id="epfMonthlyBasicDA" value="15000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="epfEmployeeContribution" class="form-label">Employee Contribution (% of Basic+DA):</label>
+                            <input type="number" class="form-control" id="epfEmployeeContribution" value="12" min="0" max="100" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="epfEmployerContribution" class="form-label">Employer Contribution (% of Basic+DA):</label>
+                            <input type="number" class="form-control" id="epfEmployerContribution" value="12" min="0" max="100" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="epfYears" class="form-label">Years of Service:</label>
+                            <input type="number" class="form-control" id="epfYears" value="10" min="1" max="60" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="epfRate" class="form-label">EPF Interest Rate (%):</label>
+                            <input type="number" class="form-control" id="epfRate" value="8.15" min="0.1" max="15" step="0.01" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateEPF()">Calculate EPF</button>
+                        <div class="calculator-result" id="epfResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>HRA Exemption Calculator <small>(Simplified)</small></h4>
+                        <div class="mb-3">
+                            <label for="hraBasicDA" class="form-label">Annual Basic + DA (₹):</label>
+                            <input type="number" class="form-control" id="hraBasicDA" value="500000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hraReceived" class="form-label">Annual HRA Received (₹):</label>
+                            <input type="number" class="form-control" id="hraReceived" value="200000" min="0" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hraRentPaid" class="form-label">Annual Rent Paid (₹):</label>
+                            <input type="number" class="form-control" id="hraRentPaid" value="250000" min="0" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hraCityType" class="form-label">City Type:</label>
+                            <select class="form-control" id="hraCityType">
+                                <option value="metro">Metro (Mumbai, Delhi, Chennai, Kolkata)</option>
+                                <option value="non-metro">Non-Metro</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateHRA()">Calculate HRA Exemption</button>
+                        <div class="calculator-result" id="hraResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Gratuity Calculator <small>(Simplified)</small></h4>
+                        <div class="mb-3">
+                            <label for="gratuityLastBasicDA" class="form-label">Last Drawn Monthly Basic + DA (₹):</label>
+                            <input type="number" class="form-control" id="gratuityLastBasicDA" value="50000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gratuityYearsService" class="form-label">Years of Service (5+ years for eligibility):</label>
+                            <input type="number" class="form-control" id="gratuityYearsService" value="7" min="0" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateGratuity()">Calculate Gratuity</button>
+                        <div class="calculator-result" id="gratuityResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>CAGR Calculator</h4>
+                        <div class="mb-3">
+                            <label for="cagrBeginningValue" class="form-label">Beginning Investment Value (₹):</label>
+                            <input type="number" class="form-control" id="cagrBeginningValue" value="100000" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cagrEndingValue" class="form-label">Ending Investment Value (₹):</label>
+                            <input type="number" class="form-control" id="cagrEndingValue" value="150000" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cagrYears" class="form-label">Number of Years:</label>
+                            <input type="number" class="form-control" id="cagrYears" value="5" min="1" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateCAGR()">Calculate CAGR</button>
+                        <div class="calculator-result" id="cagrResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Renting Yield Calculator</h4>
+                        <div class="mb-3">
+                            <label for="rentingMonthlyRent" class="form-label">Monthly Rent (₹):</label>
+                            <input type="number" class="form-control" id="rentingMonthlyRent" value="20000" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentingPropertyValue" class="form-label">Property Value (₹):</label>
+                            <input type="number" class="form-control" id="rentingPropertyValue" value="5000000" min="10000" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateRentingYield()">Calculate Renting Yield</button>
+                        <div class="calculator-result" id="rentingYieldResult"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Net Salary Estimator <small>(Simplified)</small></h4>
+                        <div class="mb-3">
+                            <label for="salaryGrossMonthly" class="form-label">Gross Monthly Salary (₹):</label>
+                            <input type="number" class="form-control" id="salaryGrossMonthly" value="50000" min="1000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="salaryPF" class="form-label">PF Contribution (% of Gross, e.g., 12):</label>
+                            <input type="number" class="form-control" id="salaryPF" value="12" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="salaryTax" class="form-label">Estimated Monthly Tax (₹):</label>
+                            <input type="number" class="form-control" id="salaryTax" value="2000" min="0">
+                        </div>
+                        <button type="button" class="btn" onclick="calculateNetSalary()">Calculate Net Salary</button>
+                        <div class="calculator-result" id="salaryResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row calculator-row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h4>Inflation Calculator</h4>
+                        <div class="mb-3">
+                            <label for="inflationPresentValue" class="form-label">Present Value of Money (₹):</label>
+                            <input type="number" class="form-control" id="inflationPresentValue" value="100000" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inflationRate" class="form-label">Annual Inflation Rate (%):</label>
+                            <input type="number" class="form-control" id="inflationRate" value="6" min="0.1" max="50" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inflationYears" class="form-label">Number of Years:</label>
+                            <input type="number" class="form-control" id="inflationYears" value="10" min="1" max="60" required>
+                        </div>
+                        <button type="button" class="btn" onclick="calculateInflation()">Calculate Inflation Impact</button>
+                        <div class="calculator-result" id="inflationResult"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/finwiseacademy01/" target="_blank" aria-label="Follow FinWise Academy on Instagram" class="instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/finwealthacademy/?viewAsMember=true" target="_blank" aria-label="Connect with FinWise Academy on LinkedIn" class="linkedin">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+            </div>
+
+            
+
+
+            <section class="mb-5">
+                <h2>Get in Touch</h2>
+                <p>Have questions or want to learn more? Reach out to us!</p>
+                <form id="contactForm">
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full Name:</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number (Optional):</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number">
+                    </div>
+                    <button type="submit" class="btn btn-success">Send Details</button>
+                    <div id="formMessage" class="form-message" style="display: none;"></div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // Helper function for displaying calculator errors
+        function displayCalculatorError(resultElementId, message) {
+            const resultElement = document.getElementById(resultElementId);
+            resultElement.innerHTML = `<p>${message}</p>`;
+            resultElement.classList.add('error');
+            resultElement.classList.remove('calculator-result');
+        }
+
+        // Helper function to reset calculator result styling
+        function resetCalculatorResult(resultElementId) {
+            const resultElement = document.getElementById(resultElementId);
+            resultElement.classList.remove('error');
+            resultElement.classList.add('calculator-result');
+        }
+
+        // Splash screen JavaScript
+        window.addEventListener('load', function() {
+            const splashScreen = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-content');
+
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+                splashScreen.addEventListener('transitionend', () => {
+                    splashScreen.style.display = 'none';
+                    mainContent.classList.add('show');
+                }, { once: true });
+            }, 3000);
+        });
+
+        // Calculator Functions (unchanged)
+        function calculateSIP() {
+            resetCalculatorResult('sipResult');
+            let monthlyInvestment = parseFloat(document.getElementById('sipMonthlyInvestment').value);
+            let annualRate = parseFloat(document.getElementById('sipAnnualRate').value);
+            let years = parseFloat(document.getElementById('sipYears').value);
+
+            if (isNaN(monthlyInvestment) || monthlyInvestment <= 0 ||
+                isNaN(annualRate) || annualRate <= 0 ||
+                isNaN(years) || years <= 0) {
+                displayCalculatorError('sipResult', 'Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            let rateOfInterest = annualRate / 100 / 12;
+            let months = years * 12;
+            let futureValue = monthlyInvestment * ((Math.pow(1 + rateOfInterest, months) - 1) / rateOfInterest) * (1 + rateOfInterest);
+
+            let investedAmount = monthlyInvestment * months;
+
+            document.getElementById('sipResult').innerHTML = `
+                <p><strong>Invested Amount:</strong> ₹${investedAmount.toFixed(2)}</p>
+                <p><strong>Estimated Value (Final Amount):</strong> ₹${futureValue.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateSWP() {
+            resetCalculatorResult('swpResult');
+            let totalInvestment = parseFloat(document.getElementById('swpTotalInvestment').value);
+            let monthlyWithdrawal = parseFloat(document.getElementById('swpMonthlyWithdrawal').value);
+            let annualRate = parseFloat(document.getElementById('swpExpectedRate').value);
+
+            if (isNaN(totalInvestment) || totalInvestment <= 0 ||
+                isNaN(monthlyWithdrawal) || monthlyWithdrawal <= 0 ||
+                isNaN(annualRate) || annualRate < 0) {
+                displayCalculatorError('swpResult', 'Please enter valid positive numbers for all fields (rate can be 0).');
+                return;
+            }
+
+            let monthlyRate = annualRate / 100 / 12;
+            let months = 0;
+            let corpus = totalInvestment;
+            let interestEarned = 0;
+
+            let resultHTML = `<p><strong>Withdrawal Simulation:</strong></p><div style="max-height: 150px; overflow-y: auto;"><ul>`;
+            const maxMonths = 600;
+
+            while (corpus > 0 && months < maxMonths) {
+                months++;
+                let interest = corpus * monthlyRate;
+                interestEarned += interest;
+                corpus += interest;
+                corpus -= monthlyWithdrawal;
+
+                resultHTML += `<li>Month ${months}: Corpus remaining ₹${Math.max(0, corpus).toFixed(2)}</li>`;
+            }
+            resultHTML += `</ul></div>`;
+
+            if (corpus <= 0) {
+                resultHTML += `<p>Corpus exhausted in <strong>${months} months</strong>.</p>`;
+            } else {
+                resultHTML += `<p>Corpus lasts for <strong>${(months / 12).toFixed(1)}+ years</strong> (simulation limit reached).</p>`;
+            }
+
+            document.getElementById('swpResult').innerHTML = resultHTML;
+        }
+
+        function calculateLoan() {
+            resetCalculatorResult('loanResult');
+            let loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            let annualRate = parseFloat(document.getElementById('loanAnnualRate').value);
+            let tenureMonths = parseFloat(document.getElementById('loanTenureMonths').value);
+
+            if (isNaN(loanAmount) || loanAmount <= 0 ||
+                isNaN(annualRate) || annualRate < 0 ||
+                isNaN(tenureMonths) || tenureMonths <= 0) {
+                displayCalculatorError('loanResult', 'Please enter valid positive numbers for all fields (rate can be 0).');
+                return;
+            }
+
+            let monthlyRate = annualRate / (12 * 100);
+            let emi;
+            let totalPayable;
+            let totalInterest;
+
+            if (monthlyRate === 0) {
+                emi = loanAmount / tenureMonths;
+                totalPayable = loanAmount;
+                totalInterest = 0;
+            } else {
+                emi = loanAmount * monthlyRate * Math.pow((1 + monthlyRate), tenureMonths) / (Math.pow((1 + monthlyRate), tenureMonths) - 1);
+                totalPayable = emi * tenureMonths;
+                totalInterest = totalPayable - loanAmount;
+            }
+
+            document.getElementById('loanResult').innerHTML = `
+                <p><strong>EMI:</strong> ₹${emi.toFixed(2)}</p>
+                <p><strong>Total Interest Payable:</strong> ₹${totalInterest.toFixed(2)}</p>
+                <p><strong>Total Amount Payable:</strong> ₹${totalPayable.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateFIRE() {
+            resetCalculatorResult('fireResult');
+            let currentSavings = parseFloat(document.getElementById('fireCurrentSavings').value);
+            let annualExpenses = parseFloat(document.getElementById('fireAnnualExpenses').value);
+            let expectedAnnualReturn = parseFloat(document.getElementById('fireAnnualReturn').value);
+            let annualSavings = parseFloat(document.getElementById('fireAnnualSavings').value);
+
+            if (isNaN(currentSavings) || currentSavings < 0 ||
+                isNaN(annualExpenses) || annualExpenses <= 0 ||
+                isNaN(expectedAnnualReturn) || expectedAnnualReturn <= 0 ||
+                isNaN(annualSavings) || annualSavings < 0) {
+                displayCalculatorError('fireResult', 'Please enter valid positive numbers for all fields (savings can be 0).');
+                return;
+            }
+
+            let fireNumber = annualExpenses * (100 / expectedAnnualReturn);
+            let yearsToFI = 0;
+            let currentCorpus = currentSavings;
+            const maxYears = 100;
+
+            if (annualSavings === 0 && currentCorpus < fireNumber) {
+                displayCalculatorError('fireResult', 'With zero annual savings, FIRE may not be achievable with current corpus.');
+                return;
+            }
+
+            while (currentCorpus < fireNumber && yearsToFI < maxYears) {
+                currentCorpus = currentCorpus * (1 + expectedAnnualReturn / 100) + annualSavings;
+                yearsToFI++;
+            }
+
+            document.getElementById('fireResult').innerHTML = `
+                <p><strong>FIRE Number (Target Corpus):</strong> ₹${fireNumber.toFixed(2)}</p>
+                <p><strong>Estimated Years to Achieve FIRE:</strong> ${yearsToFI}${yearsToFI === maxYears ? '+' : ''} years</p>
+            `;
+        }
+
+        function calculateLumpsum() {
+            resetCalculatorResult('lumpsumResult');
+            let principal = parseFloat(document.getElementById('lumpsumPrincipal').value);
+            let annualRate = parseFloat(document.getElementById('lumpsumAnnualRate').value);
+            let years = parseFloat(document.getElementById('lumpsumYears').value);
+
+            if (isNaN(principal) || principal <= 0 ||
+                isNaN(annualRate) || annualRate < 0 ||
+                isNaN(years) || years <= 0) {
+                displayCalculatorError('lumpsumResult', 'Please enter valid positive numbers for all fields (rate can be 0).');
+                return;
+            }
+
+            let finalValue = principal * Math.pow((1 + annualRate / 100), years);
+            let totalInterest = finalValue - principal;
+
+            document.getElementById('lumpsumResult').innerHTML = `
+                <p><strong>Total Investment:</strong> ₹${principal.toFixed(2)}</p>
+                <p><strong>Total Interest Earned:</strong> ₹${totalInterest.toFixed(2)}</p>
+                <p><strong>Maturity Value:</strong> ₹${finalValue.toFixed(2)}</p>
+            `;
+        }
+
+        function calculatePPF() {
+            resetCalculatorResult('ppfResult');
+            let annualInvestment = parseFloat(document.getElementById('ppfAnnualInvestment').value);
+            let years = parseFloat(document.getElementById('ppfYears').value);
+            let rate = parseFloat(document.getElementById('ppfRate').value);
+
+            if (isNaN(annualInvestment) || annualInvestment <= 0 ||
+                isNaN(years) || years < 15 ||
+                isNaN(rate) || rate < 0) {
+                displayCalculatorError('ppfResult', 'Please enter valid positive numbers. PPF years must be at least 15.');
+                return;
+            }
+
+            let maturityAmount = 0;
+            let currentBalance = 0;
+            const monthlyRate = (rate / 100) / 12;
+
+            for (let i = 1; i <= years; i++) {
+                currentBalance += annualInvestment;
+                for (let m = 0; m < 12; m++) {
+                    currentBalance *= (1 + monthlyRate);
+                }
+            }
+            maturityAmount = currentBalance;
+            let totalInvestment = annualInvestment * years;
+            let totalInterest = maturityAmount - totalInvestment;
+
+            document.getElementById('ppfResult').innerHTML = `
+                <p><strong>Total Invested:</strong> ₹${totalInvestment.toFixed(2)}</p>
+                <p><strong>Total Interest Earned:</strong> ₹${totalInterest.toFixed(2)}</p>
+                <p><strong>Maturity Value:</strong> ₹${maturityAmount.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateEPF() {
+            resetCalculatorResult('epfResult');
+            let monthlyBasicDA = parseFloat(document.getElementById('epfMonthlyBasicDA').value);
+            let employeeContribution = parseFloat(document.getElementById('epfEmployeeContribution').value);
+            let employerContribution = parseFloat(document.getElementById('epfEmployerContribution').value);
+            let years = parseFloat(document.getElementById('epfYears').value);
+            let annualRate = parseFloat(document.getElementById('epfRate').value);
+
+            if (isNaN(monthlyBasicDA) || monthlyBasicDA <= 0 ||
+                isNaN(employeeContribution) || employeeContribution < 0 || employeeContribution > 100 ||
+                isNaN(employerContribution) || employerContribution < 0 || employerContribution > 100 ||
+                isNaN(years) || years <= 0 ||
+                isNaN(annualRate) || annualRate < 0) {
+                displayCalculatorError('epfResult', 'Please enter valid positive numbers. Contributions should be percentages between 0-100.');
+                return;
+            }
+
+            const employeeShare = monthlyBasicDA * (employeeContribution / 100);
+            const employerShare = monthlyBasicDA * (employerContribution / 100);
+
+            let totalMonthlyContribution = employeeShare + employerShare;
+            let totalYears = years;
+            let monthlyRate = annualRate / 100 / 12;
+
+            let futureValue = 0;
+            for (let i = 0; i < totalYears * 12; i++) {
+                futureValue = (futureValue + totalMonthlyContribution) * (1 + monthlyRate);
+            }
+
+            let totalEmployeeContribution = employeeShare * totalYears * 12;
+            let totalEmployerContribution = employerShare * totalYears * 12;
+            let totalInvested = totalEmployeeContribution + totalEmployerContribution;
+            let totalInterestEarned = futureValue - totalInvested;
+
+            document.getElementById('epfResult').innerHTML = `
+                <p><strong>Total Employee Contribution:</strong> ₹${totalEmployeeContribution.toFixed(2)}</p>
+                <p><strong>Total Employer Contribution:</strong> ₹${totalEmployerContribution.toFixed(2)}</p>
+                <p><strong>Total Invested Amount:</strong> ₹${totalInvested.toFixed(2)}</p>
+                <p><strong>Total Interest Earned:</strong> ₹${totalInterestEarned.toFixed(2)}</p>
+                <p><strong>Maturity Value:</strong> ₹${futureValue.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateHRA() {
+            resetCalculatorResult('hraResult');
+            let basicDA = parseFloat(document.getElementById('hraBasicDA').value);
+            let hraReceived = parseFloat(document.getElementById('hraReceived').value);
+            let rentPaid = parseFloat(document.getElementById('hraRentPaid').value);
+            let cityType = document.getElementById('hraCityType').value;
+
+            if (isNaN(basicDA) || basicDA <= 0 ||
+                isNaN(hraReceived) || hraReceived < 0 ||
+                isNaN(rentPaid) || rentPaid < 0) {
+                displayCalculatorError('hraResult', 'Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            const rule1 = hraReceived;
+            const rule2 = Math.max(0, rentPaid - (basicDA * 0.10));
+            const rule3 = (cityType === 'metro' ? 0.50 : 0.40) * basicDA;
+            const hraExemption = Math.min(rule1, rule2, rule3);
+
+            document.getElementById('hraResult').innerHTML = `
+                <p><strong>HRA Exemption:</strong> ₹${hraExemption.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateGratuity() {
+            resetCalculatorResult('gratuityResult');
+            let lastBasicDA = parseFloat(document.getElementById('gratuityLastBasicDA').value);
+            let yearsService = parseFloat(document.getElementById('gratuityYearsService').value);
+
+            if (isNaN(lastBasicDA) || lastBasicDA <= 0 ||
+                isNaN(yearsService) || yearsService < 0) {
+                displayCalculatorError('gratuityResult', 'Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            let gratuity = 0;
+            if (yearsService >= 5) {
+                gratuity = lastBasicDA * (15 / 26) * yearsService;
+            } else {
+                gratuity = 0;
+            }
+
+            document.getElementById('gratuityResult').innerHTML = `
+                <p><strong>Estimated Gratuity Amount:</strong> ₹${gratuity.toFixed(2)}</p>
+                ${yearsService < 5 ? '<p class="text-danger">Note: Minimum 5 years of service required for eligibility.</p>' : ''}
+            `;
+        }
+
+        function calculateCAGR() {
+            resetCalculatorResult('cagrResult');
+            let beginningValue = parseFloat(document.getElementById('cagrBeginningValue').value);
+            let endingValue = parseFloat(document.getElementById('cagrEndingValue').value);
+            let years = parseFloat(document.getElementById('cagrYears').value);
+
+            if (isNaN(beginningValue) || beginningValue <= 0 ||
+                isNaN(endingValue) || endingValue <= 0 ||
+                isNaN(years) || years <= 0) {
+                displayCalculatorError('cagrResult', 'Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            let cagr = (Math.pow((endingValue / beginningValue), (1 / years)) - 1) * 100;
+
+            document.getElementById('cagrResult').innerHTML = `
+                <p><strong>CAGR:</strong> ${cagr.toFixed(2)}%</p>
+            `;
+        }
+
+        function calculateRentingYield() {
+            resetCalculatorResult('rentingYieldResult');
+            let monthlyRent = parseFloat(document.getElementById('rentingMonthlyRent').value);
+            let propertyValue = parseFloat(document.getElementById('rentingPropertyValue').value);
+
+            if (isNaN(monthlyRent) || monthlyRent <= 0 ||
+                isNaN(propertyValue) || propertyValue <= 0) {
+                displayCalculatorError('rentingYieldResult', 'Please enter valid positive numbers for all fields.');
+                return;
+            }
+
+            let annualRent = monthlyRent * 12;
+            let rentalYield = (annualRent / propertyValue) * 100;
+
+            document.getElementById('rentingYieldResult').innerHTML = `
+                <p><strong>Annual Rent:</strong> ₹${annualRent.toFixed(2)}</p>
+                <p><strong>Rental Yield:</strong> ${rentalYield.toFixed(2)}%</p>
+            `;
+        }
+
+        function calculateNetSalary() {
+            resetCalculatorResult('salaryResult');
+            let grossMonthly = parseFloat(document.getElementById('salaryGrossMonthly').value);
+            let pfPercentage = parseFloat(document.getElementById('salaryPF').value);
+            let estimatedTax = parseFloat(document.getElementById('salaryTax').value);
+
+            if (isNaN(grossMonthly) || grossMonthly <= 0 ||
+                isNaN(pfPercentage) || pfPercentage < 0 || pfPercentage > 100 ||
+                isNaN(estimatedTax) || estimatedTax < 0) {
+                displayCalculatorError('salaryResult', 'Please enter valid numbers. Gross salary must be positive. PF % between 0-100. Tax can be 0.');
+                return;
+            }
+
+            const pfContribution = grossMonthly * (pfPercentage / 100);
+            const netSalary = grossMonthly - pfContribution - estimatedTax;
+
+            document.getElementById('salaryResult').innerHTML = `
+                <p><strong>Gross Monthly Salary:</strong> ₹${grossMonthly.toFixed(2)}</p>
+                <p><strong>PF Contribution:</strong> ₹${pfContribution.toFixed(2)}</p>
+                <p><strong>Estimated Monthly Tax:</strong> ₹${estimatedTax.toFixed(2)}</p>
+                <p><strong>Estimated Net Monthly Salary:</strong> ₹${netSalary.toFixed(2)}</p>
+            `;
+        }
+
+        function calculateInflation() {
+            resetCalculatorResult('inflationResult');
+            let presentValue = parseFloat(document.getElementById('inflationPresentValue').value);
+            let rate = parseFloat(document.getElementById('inflationRate').value);
+            let years = parseFloat(document.getElementById('inflationYears').value);
+
+            if (isNaN(presentValue) || presentValue <= 0 ||
+                isNaN(rate) || rate < 0 ||
+                isNaN(years) || years <= 0) {
+                displayCalculatorError('inflationResult', 'Please enter valid positive numbers for all fields (rate can be 0).');
+                return;
+            }
+
+            const futureValue = presentValue * Math.pow((1 + rate / 100), years);
+            const equivalentFutureCost = presentValue * Math.pow((1 + rate / 100), years);
+
+            document.getElementById('inflationResult').innerHTML = `
+                <p><strong>Future Value of ₹${presentValue.toFixed(2)}:</strong> ₹${futureValue.toFixed(2)}</p>
+                <p><strong>Equivalent Cost after ${years} Years:</strong> ₹${equivalentFutureCost.toFixed(2)}</p>
+                <p class="text-muted small">This is the approximate value needed in the future to have the same purchasing power.</p>
+            `;
+        }
+
+        // Form submission handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const fullName = document.getElementById('full_name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phoneNumber = document.getElementById('phone_number').value.trim();
+
+                    // Client-side validation
+                    if (!fullName || !email) {
+                        formMessage.style.display = 'block';
+                        formMessage.classList.add('error');
+                        formMessage.classList.remove('success');
+                        formMessage.innerHTML = 'Please fill out all required fields.';
+                        return;
+                    }
+
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        formMessage.style.display = 'block';
+                        formMessage.classList.add('error');
+                        formMessage.classList.remove('success');
+                        formMessage.innerHTML = 'Please enter a valid email address.';
+                        return;
+                    }
+
+                    const formData = new FormData(contactForm);
+
+                    fetch('submit_form.php', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        signal: AbortSignal.timeout(5000) // 5-second timeout
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.text().then(text => {
+                            try {
+                                return JSON.parse(text);
+                            } catch (e) {
+                                throw new Error('Invalid JSON response from server: ' + text);
+                            }
+                        });
+                    })
+                    .then(data => {
+                        formMessage.style.display = 'block';
+                        if (data.success) {
+                            formMessage.classList.add('success');
+                            formMessage.classList.remove('error');
+                            formMessage.innerHTML = 'Thank you for contacting us! We will reach out soon.';
+                            contactForm.reset();
+                        } else {
+                            formMessage.classList.add('error');
+                            formMessage.classList.remove('success');
+                            formMessage.innerHTML = 'Error: ' + (data.message || 'Unknown error occurred');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Form submission error:', error);
+                        formMessage.style.display = 'block';
+                        formMessage.classList.add('error');
+                        formMessage.classList.remove('success');
+                        formMessage.innerHTML = 'An error occurred while submitting the form: ' + error.message;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Expertise - FinWise Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        .expertise-item {
+            padding: 10px 15px;
+            margin: 10px 0;
+            background-color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            will-change: transform, background-color, box-shadow;
+        }
+        .expertise-item:hover {
+            transform: translateX(10px) scale(1.02);
+            background-color: #d1e7ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            overflow: auto;
+        }
+        .custom-modal.active {
+            display: block;
+        }
+        .custom-modal-content {
+            background: #fff;
+            margin: 10% auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+        .custom-modal.active .custom-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .custom-modal h5 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.5em;
+        }
+        .custom-modal h6 {
+            margin: 20px 0 8px;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+        .custom-modal p {
+            margin: 0 0 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .custom-modal ul {
+            margin: 0 0 15px;
+            padding-left: 25px;
+        }
+        .custom-modal li {
+            margin-bottom: 8px;
+            color: #555;
+            line-height: 1.5;
+        }
+        /* New styles for the close button */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            color: #ff0000;
+        }
+        .close-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+        @media (max-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .custom-modal-content {
+                max-width: 95%;
+                padding: 20px;
+            }
+            .close-btn {
+                top: 10px;
+                right: 10px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>My Expertise</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li class="expertise-item" data-modal-id="budgetingModal" id="budgeting-item">Budgeting</li>
+                    <li class="expertise-item" data-modal-id="debtManagementModal" id="debtManagement-item">Debt Management</li>
+                    <li class="expertise-item" data-modal-id="savingStrategiesModal" id="savingStrategies-item">Saving Strategies</li>
+                    <li class="expertise-item" data-modal-id="financialAnalysisFintechInvestmentStrategiesPersonalFinanceModal" id="financialAnalysisFintechInvestmentStrategiesPersonalFinance-item">Financial Analysis | FinTech | Investment Strategies | Personal Finance</li>
+                    <li class="expertise-item" data-modal-id="financialModelingValuationModal" id="financialModelingValuation-item">Financial Modeling & Valuation</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li class="expertise-item" data-modal-id="financialPlanningModal" id="financialPlanning-item">Financial Planning</li>
+                    <li class="expertise-item" data-modal-id="investmentEducationModal" id="investmentEducation-item">Investment Education</li>
+                    <li class="expertise-item" data-modal-id="financialLiteracyModal" id="financialLiteracy-item">Financial Literacy</li>
+                    <li class="expertise-item" data-modal-id="investmentResearchStockMarketAnalysisModal" id="investmentResearchStockMarketAnalysis-item">Investment Research & Stock Market Analysis</li>
+                    <li class="expertise-item" data-modal-id="personalFinancialPlanningModal" id="personalFinancialPlanning-item">Personal Financial Planning</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li class="expertise-item" data-modal-id="wealthManagementPersonalFinanceModal" id="wealthManagementPersonalFinance-item">Wealth Management & Personal Finance</li>
+                    <li class="expertise-item" data-modal-id="budgetingDebtManagementModal" id="budgetingDebtManagement-item">Budgeting & Debt Management</li>
+                    <li class="expertise-item" data-modal-id="fintechAiInFinanceModal" id="fintechAiInFinance-item">FinTech & AI in Finance</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li class="expertise-item" data-modal-id="cryptocurrencyBlockchainBasicsModal" id="cryptocurrencyBlockchainBasics-item">Cryptocurrency & Blockchain Basics</li>
+                    <li class="expertise-item" data-modal-id="financialLiteracyEducationModal" id="financialLiteracyEducation-item">Financial Literacy & Education</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Budgeting Modal -->
+        <div class="custom-modal" id="budgetingModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Budgeting</h5>
+                <h6>What is Budgeting?</h6>
+                <p>Budgeting is the process of creating a structured plan to allocate your income toward expenses, savings, and debt repayment. It involves tracking spending, setting financial goals, and ensuring you live within your means, tailored to your lifestyle and priorities.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Financial Control</strong>: Prevents overspending by monitoring expenses.</li>
+                    <li><strong>Goal Achievement</strong>: Enables saving for major purchases like a home or car.</li>
+                    <li><strong>Debt Reduction</strong>: Allocates funds to pay off loans or credit cards.</li>
+                    <li><strong>Emergency Preparedness</strong>: Builds a safety net for unexpected expenses.</li>
+                    <li><strong>Stress Reduction</strong>: Provides clarity and confidence in financial decisions.</li>
+                    <li><strong>Habit Formation</strong>: Encourages disciplined spending and saving routines.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You earn ₹60,000 monthly and want to save for a ₹5,00,000 vacation in 2 years while managing expenses.</p>
+                <ul>
+                    <li><strong>50/30/20 Rule</strong>: Allocate 50% (₹30,000) for needs (rent: ₹18,000, groceries: ₹8,000, utilities: ₹4,000), 30% (₹18,000) for wants (dining: ₹6,000, entertainment: ₹7,000, travel: ₹5,000), and 20% (₹12,000) for savings/debt (vacation fund: ₹8,000, emergency fund: ₹4,000).</li>
+                    <li><strong>Steps</strong>: Use a budgeting app like Moneycontrol or Walnut to track expenses. Review weekly to adjust spending. Set up auto-transfers to a savings account for the vacation fund.</li>
+                    <li><strong>Outcome</strong>: In 2 years, ₹8,000/month × 24 = ₹1,92,000 saved, plus interest if in a fixed deposit (e.g., 6% p.a.). Combine with other savings to reach ₹5,00,000.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Debt Management Modal -->
+        <div class="custom-modal" id="debtManagementModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Debt Management</h5>
+                <h6>What is Debt Management?</h6>
+                <p>Debt management involves creating strategies to repay debts efficiently, such as prioritizing high-interest loans, consolidating debts, or negotiating lower rates. It aims to reduce financial burden and improve cash flow while maintaining a good credit score.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Lower Interest Costs</strong>: Reduces total interest paid over time.</li>
+                    <li><strong>Credit Score Improvement</strong>: Timely repayments enhance creditworthiness.</li>
+                    <li><strong>Financial Freedom</strong>: Frees income for savings or investments.</li>
+                    <li><strong>Stress Reduction</strong>: Provides a clear repayment plan.</li>
+                    <li><strong>Debt Consolidation</strong>: Simplifies multiple debts into one payment.</li>
+                    <li><strong>Negotiation Skills</strong>: Encourages discussions with lenders for better terms.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You have debts: ₹30,000 credit card (18% interest), ₹50,000 personal loan (12%), ₹15,000 store loan (10%).</p>
+                <ul>
+                    <li><strong>Snowball Method</strong>: List debts smallest to largest: ₹15,000, ₹30,000, ₹50,000. Pay minimums (₹500, ₹1,200, ₹1,500). Allocate extra ₹3,000/month to ₹15,000 debt.</li>
+                    <li><strong>Steps</strong>: Clear ₹15,000 in ~5 months, then roll ₹3,500 (minimum + extra) to ₹30,000 debt, clearing it in ~9 months. Finally, apply ₹5,200 to ₹50,000 debt. Use a debt tracker app like Cred to monitor progress.</li>
+                    <li><strong>Outcome</strong>: Debt-free in ~2 years, saving thousands in interest compared to minimum payments. Improved credit score enables better loan terms in the future.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Saving Strategies Modal -->
+        <div class="custom-modal" id="savingStrategiesModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Saving Strategies</h5>
+                <h6>What are Saving Strategies?</h6>
+                <p>Saving strategies are techniques to set aside money consistently for future needs or goals. These include automating savings, reducing discretionary spending, leveraging high-interest accounts, and setting specific, measurable targets.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Wealth Accumulation</strong>: Grows funds for major life events.</li>
+                    <li><strong>Financial Security</strong>: Creates an emergency fund for crises.</li>
+                    <li><strong>Discipline</strong>: Builds consistent saving habits.</li>
+                    <li><strong>Opportunity Access</strong>: Funds education, business ventures, or travel.</li>
+                    <li><strong>Interest Earnings</strong>: Maximizes returns via savings accounts or FDs.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You earn ₹70,000/month and aim to save ₹10,00,000 for a home down payment in 4 years.</p>
+                <ul>
+                    <li><strong>Automation</strong>: Save ₹20,000/month via auto-debit to a high-yield savings account (e.g., 4% p.a.) or fixed deposit (6% p.a.). Cut discretionary spending (e.g., ₹3,000 dining, ₹2,000 subscriptions).</li>
+                    <li><strong>Steps</strong>: Open a separate savings account with banks like Kotak or HDFC. Set up auto-transfers on payday. Track expenses with YNAB or Zerodha’s Varsity tools. Review monthly to stay on track.</li>
+                    <li><strong>Outcome</strong>: ₹20,000 × 48 months = ₹9,60,000, plus ~₹50,000 interest (at 4%). Combine with bonuses to reach ₹10,00,000, securing the down payment.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Planning Modal -->
+        <div class="custom-modal" id="financialPlanningModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Financial Planning</h5>
+                <h6>What is Financial Planning?</h6>
+                <p>Financial planning is a comprehensive process to set, prioritize, and achieve long-term financial goals. It involves budgeting, saving, investing, insurance, and tax planning to ensure financial stability and growth.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Goal Clarity</strong>: Aligns finances with life goals like retirement or education.</li>
+                    <li><strong>Risk Management</strong>: Includes insurance to protect against uncertainties.</li>
+                    <li><strong>Wealth Growth</strong>: Optimizes investments for higher returns.</li>
+                    <li><strong>Tax Efficiency</strong>: Reduces tax liability through smart planning.</li>
+                    <li><strong>Peace of Mind</strong>: Offers a roadmap for financial security.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You’re 35, aiming to retire at 60 with ₹3 crore, expecting 8% annual returns.</p>
+                <ul>
+                    <li><strong>Investment Plan</strong>: Save ₹25,000/month in equity mutual funds via SIPs. Buy term insurance (₹1 crore cover) and health insurance (₹10 lakh cover).</li>
+                    <li><strong>Steps</strong>: Use a SIP calculator to estimate needs. Invest in funds like Parag Parikh Flexi Cap via platforms like Groww. Claim tax deductions under Section 80C (PPF) and 80D (health insurance). Review annually with a SEBI-registered advisor.</li>
+                    <li><strong>Outcome</strong>: ₹25,000/month × 25 years at 8% CAGR ~ ₹2.3 crore. Add EPF/PPF contributions to reach ₹3 crore, ensuring a comfortable retirement.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Investment Education Modal -->
+        <div class="custom-modal" id="investmentEducationModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Investment Education</h5>
+                <h6>What is Investment Education?</h6>
+                <p>Investment education is the study of financial instruments (stocks, bonds, mutual funds) and strategies to grow wealth while managing risks. It empowers individuals to make informed decisions and build long-term financial stability.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Informed Decisions</strong>: Chooses investments aligned with goals.</li>
+                    <li><strong>Risk Management</strong>: Uses diversification to minimize losses.</li>
+                    <li><strong>Wealth Creation</strong>: Leverages compounding for higher returns.</li>
+                    <li><strong>Financial Independence</strong>: Reduces reliance on single income sources.</li>
+                    <li><strong>Confidence</strong>: Enables active portfolio management.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You have ₹2,00,000 to invest for 7 years, aiming for growth with moderate risk.</p>
+                <ul>
+                    <li><strong>Mutual Fund Investment</strong>: Allocate ₹1,50,000 to a large-cap equity fund (12% expected CAGR) and ₹50,000 to a debt fund (6% CAGR) for diversification.</li>
+                    <li><strong>Steps</strong>: Research funds via Moneycontrol or Morningstar. Invest via Zerodha Coin or Kuvera. Monitor quarterly, rebalance annually. Learn basics from books like “The Intelligent Investor” or Varsity by Zerodha.</li>
+                    <li><strong>Outcome</strong>: Equity fund grows to ~₹3,37,000, debt fund to ~₹75,000, totaling ~₹4,12,000. Reinvest gains for further compounding.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Literacy Modal -->
+        <div class="custom-modal" id="financialLiteracyModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Financial Literacy</h5>
+                <h6>What is Financial Literacy?</h6>
+                <p>Financial literacy is the ability to understand and manage personal finances effectively. It covers budgeting, saving, investing, credit management, taxes, and insurance, equipping individuals to make sound financial decisions.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Empowerment</strong>: Enables confident financial choices.</li>
+                    <li><strong>Error Avoidance</strong>: Prevents mistakes like high-interest debt traps.</li>
+                    <li><strong>Long-Term Security</strong>: Promotes savings and investment habits.</li>
+                    <li><strong>Life Preparedness</strong>: Equips for major decisions (e.g., home loans).</li>
+                    <li><strong>Consumer Awareness</strong>: Helps evaluate financial products like insurance or loans.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You have a credit card with a ₹1,00,000 limit (24% annual interest) and want to use it wisely.</p>
+                <ul>
+                    <li><strong>Credit Management</strong>: Spend ₹20,000/month on essentials. Pay the full balance by the due date to avoid interest. Use rewards (e.g., 2% cashback) for savings.</li>
+                    <li><strong>Steps</strong>: Track spending via card apps like HDFC’s MyCards. Set payment reminders. Learn credit basics from RBI’s financial literacy resources or online courses like Coursera. Avoid cash advances (high fees).</li>
+                    <li><strong>Outcome</strong>: Zero interest paid, ~₹4,800/year in cashback. Maintains a high credit score (750+), enabling better loan terms for future needs like a car loan.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Analysis | FinTech | Investment Strategies | Personal Finance Modal -->
+        <div class="custom-modal" id="financialAnalysisFintechInvestmentStrategiesPersonalFinanceModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Financial Analysis | FinTech | Investment Strategies | Personal Finance</h5>
+                <h6>What is Financial Analysis, FinTech, Investment Strategies, and Personal Finance?</h6>
+                <p>This comprehensive area integrates the skills to analyze financial data (Financial Analysis), leverage technology for financial services (FinTech), develop plans to grow wealth (Investment Strategies), and manage individual financial well-being (Personal Finance). It's about making data-driven decisions, using innovative tools, and planning for long-term financial health.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Holistic Financial Management</strong>: Provides a complete view of your financial landscape.</li>
+                    <li><strong>Optimized Decision-Making</strong>: Enables smart choices based on thorough analysis.</li>
+                    <li><strong>Technological Advantage</strong>: Utilizes FinTech tools for efficiency and accessibility.</li>
+                    <li><strong>Strategic Wealth Growth</strong>: Implements effective investment plans.</li>
+                    <li><strong>Improved Financial Health</strong>: Ensures personal financial stability and growth.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You want to understand market trends, use digital platforms for investing, and build a personalized investment portfolio.</p>
+                <ul>
+                    <li><strong>Application</strong>: Use financial analysis to evaluate companies (e.g., using P/E ratios, balance sheets). Explore FinTech platforms like Upstox or Paytm Money for seamless investing. Develop a diversified investment strategy combining equity, debt, and digital gold based on your risk appetite and goals. Apply personal finance principles to ensure these investments align with your budget and overall financial plan.</li>
+                    <li><strong>Outcome</strong>: A well-structured investment portfolio managed efficiently through digital tools, informed by sound financial analysis, and aligned with your personal financial goals.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Modeling & Valuation Modal -->
+        <div class="custom-modal" id="financialModelingValuationModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Financial Modeling & Valuation</h5>
+                <h6>What is Financial Modeling & Valuation?</h6>
+                <p>Financial modeling involves building spreadsheet-based models to forecast a company's financial performance, often used for business planning, investment analysis, or mergers and acquisitions. Valuation is the process of determining the intrinsic value of an asset or company, typically used to make investment decisions.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Informed Investment Decisions</strong>: Provides a data-driven basis for buying or selling assets.</li>
+                    <li><strong>Strategic Business Planning</strong>: Helps companies assess financial viability of projects.</li>
+                    <li><strong>Mergers & Acquisitions</strong>: Facilitates fair deal negotiation and valuation.</li>
+                    <li><strong>Risk Assessment</strong>: Identifies potential financial risks and opportunities.</li>
+                    <li><strong>Capital Allocation</strong>: Guides decisions on where to invest capital for maximum returns.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You are an investor considering buying shares of a tech startup, and you need to determine its fair value.</p>
+                <ul>
+                    <li><strong>Application</strong>: Build a discounted cash flow (DCF) model to project the startup's future revenues, expenses, and free cash flows for the next 5-10 years. Use assumptions for growth rates, profit margins, and discount rates. Calculate the present value of these future cash flows to arrive at an intrinsic value per share. Compare this intrinsic value to the current market price to decide if the stock is undervalued or overvalued.</li>
+                    <li><strong>Outcome</strong>: A clear, quantifiable valuation of the startup, enabling you to make a more confident and informed investment decision based on its fundamental value rather than market sentiment alone.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Investment Research & Stock Market Analysis Modal -->
+        <div class="custom-modal" id="investmentResearchStockMarketAnalysisModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Investment Research & Stock Market Analysis</h5>
+                <h6>What is Investment Research & Stock Market Analysis?</h6>
+                <p>Investment research involves gathering and analyzing information about financial instruments, markets, and economic trends to identify investment opportunities. Stock market analysis specifically focuses on evaluating individual stocks or the broader market to predict future price movements and make informed trading or investment decisions.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Identifies Opportunities</strong>: Uncovers undervalued stocks or emerging trends.</li>
+                    <li><strong>Minimizes Risks</strong>: Helps understand potential downsides of investments.</li>
+                    <li><strong>Optimizes Returns</strong>: Supports strategic asset allocation and timing.</li>
+                    <li><strong>Empowers Decisions</strong>: Provides confidence in investment choices.</li>
+                    <li><strong>Market Insight</strong>: Offers a deeper understanding of market dynamics.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You want to invest in the Indian stock market and need to pick a promising company.</p>
+                <ul>
+                    <li><strong>Application</strong>: Conduct fundamental analysis on a company by reviewing its financial statements (P&L, balance sheet, cash flow), management quality, industry outlook, and competitive landscape. Simultaneously, use technical analysis by studying stock charts, trading volumes, and indicators (e.g., moving averages, RSI) to identify entry and exit points. For example, research a company like Reliance Industries, analyzing its quarterly results, future expansion plans, and its chart patterns to time your investment.</li>
+                    <li><strong>Outcome</strong>: A well-researched decision to invest in a particular stock, backed by both fundamental strength and favorable market timing, increasing the probability of profitable returns.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Personal Financial Planning Modal -->
+        <div class="custom-modal" id="personalFinancialPlanningModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Personal Financial Planning</h5>
+                <h6>What is Personal Financial Planning?</h6>
+                <p>Personal financial planning is a holistic approach to managing your financial life to achieve your life goals. It involves evaluating your current financial situation, setting future goals, and creating a strategic roadmap for budgeting, saving, investing, insurance, retirement, and estate planning.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Achieves Life Goals</strong>: Maps out paths for retirement, education, or homeownership.</li>
+                    <li><strong>Reduces Financial Stress</strong>: Provides clarity and control over finances.</li>
+                    <li><strong>Optimizes Resources</strong>: Ensures efficient use of income and assets.</li>
+                    <li><strong>Protects Against Risks</strong>: Incorporates insurance and emergency funds.</li>
+                    <li><strong>Legacy Planning</strong>: Helps plan for wealth transfer and estate.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You're in your late 20s, recently married, and want to plan for a stable financial future, including buying a home and starting a family.</p>
+                <ul>
+                    <li><strong>Application</strong>: Work with a financial planner to assess your current income, expenses, and existing assets/liabilities. Define clear goals: e.g., ₹20 lakh down payment for a home in 5 years, ₹50 lakh education fund for a child in 15 years, and retirement planning. Create a detailed budget, set up automated savings and SIPs for investment goals, consider term life insurance and health insurance, and start discussing wills/nomination.</li>
+                    <li><strong>Outcome</strong>: A clear, actionable financial plan that outlines specific steps, investment strategies, and insurance coverage needed to achieve your family's short-term and long-term financial aspirations, providing peace of mind.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Wealth Management & Personal Finance Modal -->
+        <div class="custom-modal" id="wealthManagementPersonalFinanceModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Wealth Management & Personal Finance</h5>
+                <h6>What is Wealth Management & Personal Finance?</h6>
+                <p>Wealth management is an advanced and comprehensive financial service that caters to the complex financial needs of affluent individuals and families. It encompasses a wide range of services including investment management, financial planning, retirement planning, estate planning, tax services, and philanthropic advice. Personal finance, on the other hand, deals with managing one's own money and financial decisions, including income, expenses, savings, and investments.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Holistic Financial Growth</strong>: Integrates all aspects of finance for optimal wealth creation.</li>
+                    <li><strong>Preservation of Capital</strong>: Strategies to protect wealth from inflation and market downturns.</li>
+                    <li><strong>Tax Efficiency</strong>: Minimizes tax liabilities through strategic planning.</li>
+                    <li><strong>Intergenerational Wealth Transfer</strong>: Ensures smooth transfer of assets to heirs.</li>
+                    <li><strong>Customized Solutions</strong>: Tailored strategies to meet individual financial goals.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You are a high-net-worth individual with diverse investments, multiple properties, and a desire to leave a legacy while minimizing taxes.</p>
+                <ul>
+                    <li><strong>Application</strong>: A wealth manager would work with you to consolidate and optimize your investment portfolio across various asset classes (stocks, bonds, real estate, alternative investments). They would create a comprehensive financial plan that includes tax-efficient investment strategies, estate planning (e.g., setting up trusts, wills), and philanthropic endeavors. This might involve rebalancing your portfolio, suggesting tax-saving instruments like ELSS, and planning for seamless asset distribution to your beneficiaries.</li>
+                    <li><strong>Outcome</strong>: A streamlined and optimized financial structure that not only grows your wealth but also preserves it, manages taxes effectively, and facilitates the smooth transfer of assets according to your wishes, ensuring your financial legacy.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Budgeting & Debt Management Modal -->
+        <div class="custom-modal" id="budgetingDebtManagementModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Budgeting & Debt Management</h5>
+                <h6>What is Budgeting & Debt Management?</h6>
+                <p>Budgeting involves creating a plan to track and control income and expenses, ensuring you spend within your means and allocate funds effectively. Debt management focuses on developing strategies to efficiently repay outstanding debts, reduce interest costs, and improve your financial health by systematically eliminating liabilities.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Financial Control</strong>: Gain a clear understanding of your cash flow.</li>
+                    <li><strong>Reduced Financial Stress</strong>: Provides a roadmap to financial freedom.</li>
+                    <li><strong>Improved Credit Score</strong>: Consistent debt repayment boosts creditworthiness.</li>
+                    <li><strong>Increased Savings Potential</strong>: Frees up funds for savings and investments.</li>
+                    <li><strong>Prevention of Future Debt</strong>: Builds habits to avoid accumulating unnecessary debt.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You have accumulated credit card debt and want to regain control of your finances and pay it off quickly.</p>
+                <ul>
+                    <li><strong>Application</strong>: First, create a detailed budget to understand where your money is going. Identify areas to cut discretionary spending (e.g., dining out, subscriptions) to free up extra cash. Then, implement a debt management strategy like the 'debt avalanche' (paying off highest interest debt first) or 'debt snowball' (paying off smallest debt first). For example, if you have ₹50,000 on a credit card at 24% interest, prioritize paying more than the minimum, perhaps by dedicating an extra ₹5,000 from your reduced spending.</li>
+                    <li><strong>Outcome</strong>: By sticking to your budget and debt repayment plan, you systematically reduce your credit card balance, save significantly on interest payments, and build a stronger financial foundation, enabling you to allocate more funds towards savings or investments in the future.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FinTech & AI in Finance Modal -->
+        <div class="custom-modal" id="fintechAiInFinanceModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>FinTech & AI in Finance</h5>
+                <h6>What is FinTech & AI in Finance?</h6>
+                <p>FinTech (Financial Technology) refers to innovative technologies that improve and automate the delivery and use of financial services. AI (Artificial Intelligence) in finance involves using machine learning, natural language processing, and other AI techniques to analyze vast amounts of financial data, automate processes, detect fraud, and provide personalized financial advice.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Enhanced Efficiency</strong>: Automates tasks, reducing operational costs and time.</li>
+                    <li><strong>Improved Customer Experience</strong>: Provides personalized services and faster transactions.</li>
+                    <li><strong>Advanced Risk Management</strong>: Detects fraud and assesses credit risk more accurately.</li>
+                    <li><strong>Smarter Investment Decisions</strong>: AI-driven insights for optimized portfolios.</li>
+                    <li><strong>Accessibility to Services</strong>: Expands financial services to underserved populations.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You are a small business owner looking for efficient ways to manage your finances and make better investment decisions.</p>
+                <ul>
+                    <li><strong>Application</strong>: Utilize FinTech solutions like digital payment gateways (e.g., Razorpay, Stripe) for seamless transactions. Implement AI-powered accounting software (e.g., Zoho Books with AI features) to automate expense tracking and reconciliation. Consider robo-advisors (e.g., Scripbox, Cube Wealth) for automated investment management based on AI algorithms that assess your risk profile and optimize your portfolio. Use AI-driven analytics tools to gain insights into your business's cash flow and predict future financial performance.</li>
+                    <li><strong>Outcome</strong>: Increased efficiency in managing daily financial operations, data-driven insights for strategic decision-making, and access to sophisticated investment advice traditionally available only to large investors, ultimately leading to better financial outcomes for your business.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Cryptocurrency & Blockchain Basics Modal -->
+        <div class="custom-modal" id="cryptocurrencyBlockchainBasicsModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Cryptocurrency & Blockchain Basics</h5>
+                <h6>What are Cryptocurrency & Blockchain Basics?</h6>
+                <p>Cryptocurrency is a digital or virtual currency secured by cryptography, making it nearly impossible to counterfeit or double-spend. Blockchain is the underlying technology, a decentralized, distributed ledger that records transactions across many computers, ensuring transparency, security, and immutability.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Decentralization</strong>: Eliminates intermediaries, empowering users.</li>
+                    <li><strong>Enhanced Security</strong>: Cryptography and immutability reduce fraud.</li>
+                    <li><strong>Transparency</strong>: All transactions are publicly verifiable on the blockchain.</li>
+                    <li><strong>Global Transactions</strong>: Enables fast, low-cost cross-border payments.</li>
+                    <li><strong>Innovation</strong>: Powers new applications like DeFi and NFTs.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You're interested in understanding how Bitcoin transactions work and the potential of blockchain technology beyond just digital currencies.</p>
+                <ul>
+                    <li><strong>Application</strong>: Learn about the mining process in Bitcoin, how transactions are verified and added to the blockchain, and the concept of public and private keys. Explore how blockchain is used in supply chain management (e.g., tracking goods from origin to consumer), healthcare (securely managing patient records), or voting systems (ensuring transparent and tamper-proof elections). Consider using a secure cryptocurrency exchange (e.g., CoinDCX, WazirX) for small, educational trades to understand practical aspects.</li>
+                    <li><strong>Outcome</strong>: A foundational understanding of how cryptocurrencies operate, the security and transparency benefits of blockchain technology, and its diverse applications across various industries, positioning you to navigate the evolving digital economy more effectively.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Literacy & Education Modal -->
+        <div class="custom-modal" id="financialLiteracyEducationModal">
+            <div class="custom-modal-content">
+                <button class="close-btn" aria-label="Close modal">&times;</button>
+                <h5>Financial Literacy & Education</h5>
+                <h6>What is Financial Literacy & Education?</h6>
+                <p>Financial literacy is the knowledge and understanding of financial concepts, including budgeting, saving, debt, investing, and financial planning. Financial education is the process of acquiring these skills and knowledge, enabling individuals to make informed and effective decisions regarding their money and financial resources.</p>
+                <h6>How It Helps</h6>
+                <ul>
+                    <li><strong>Informed Decision-Making</strong>: Equips individuals to make sound financial choices.</li>
+                    <li><strong>Avoids Financial Pitfalls</strong>: Helps recognize and steer clear of scams and bad debt.</li>
+                    <li><strong>Empowers Financial Independence</strong>: Builds confidence in managing money.</li>
+                    <li><strong>Improves Quality of Life</strong>: Reduces financial stress and anxiety.</li>
+                    <li><strong>Facilitates Wealth Building</strong>: Promotes smart saving and investment habits.</li>
+                </ul>
+                <h6>Example</h6>
+                <p><strong>Scenario</strong>: You are a young professional starting your career and want to build a strong financial foundation for the future.</p>
+                <ul>
+                    <li><strong>Application</strong>: Dedicate time to learn about fundamental financial concepts. Read books like "Rich Dad Poor Dad" or "The Psychology of Money." Enroll in online courses on platforms like Coursera or Udemy for personal finance. Follow reputable financial news sources. Start by creating a simple budget, understanding your employee benefits (like EPF), and learning about basic investment options like recurring deposits (RDs) or mutual fund SIPs.</li>
+                    <li><strong>Outcome</strong>: You gain the essential knowledge and skills to manage your income, make informed choices about saving and investing, understand the importance of insurance, and plan for long-term financial goals, setting yourself up for a secure and prosperous financial future.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom modal handler
+        (function() {
+            function openModal(modalId) {
+                console.log('Opening modal:', modalId);
+                try {
+                    const modal = document.getElementById(modalId);
+                    if (!modal) {
+                        console.error('Modal not found:', modalId);
+                        alert('Modal not found. Please try again.');
+                        return;
+                    }
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    console.log('Modal opened:', modalId);
+                } catch (error) {
+                    console.error('Error opening modal:', error);
+                    alert('Failed to open modal.');
+                }
+            }
+
+            function closeModal(modalId) {
+                console.log('Closing modal:', modalId);
+                try {
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        console.log('Modal closed:', modalId);
+                    }
+                } catch (error) {
+                    console.error('Error closing modal:', error);
+                }
+            }
+
+            // Attach click handlers for expertise items
+            const items = document.querySelectorAll('.expertise-item');
+            console.log('Found items:', items.length);
+            items.forEach(item => {
+                item.addEventListener('click', () => {
+                    const modalId = item.getAttribute('data-modal-id');
+                    console.log('Clicked item, modalId:', modalId);
+                    if (modalId) openModal(modalId);
+                });
+            });
+
+            // Close on backdrop click
+            document.querySelectorAll('.custom-modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(modal.id);
+                });
+            });
+
+            // Close on close button click
+            document.querySelectorAll('.close-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = button.closest('.custom-modal');
+                    if (modal) closeModal(modal.id);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
